@@ -10,12 +10,12 @@ import {
 } from "react-native";
 import { MapContext } from "../store/context/map-context";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 const CARD_HEIGHT = 220;
 const CARD_WIDTH = width * 0.8;
 
 const Card = ({ itemData, tranformScale }) => {
-  const { addMapRegion, mapRegion } = useContext(MapContext);
+  const { addMapRegion } = useContext(MapContext);
 
   const handleRegionSelection = () => {
     addMapRegion({
@@ -25,7 +25,6 @@ const Card = ({ itemData, tranformScale }) => {
       longitudeDelta: 0.0421,
     });
   };
-  console.log("card", mapRegion);
 
   return (
     <Animated.View style={styles.card}>
@@ -33,6 +32,13 @@ const Card = ({ itemData, tranformScale }) => {
         style={{ height: CARD_HEIGHT, width: CARD_WIDTH }}
         onPress={handleRegionSelection}
       >
+        <View style={styles.cardImgWrapper}>
+          <Image
+            source={{ uri: itemData.imgUrl }}
+            style={styles.cardImg}
+            resizeMode="cover"
+          />
+        </View>
         <View style={styles.cardInfo}>
           <Text style={styles.cardTitle}>{itemData.name}</Text>
 
@@ -77,7 +83,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 0,
   },
   cardInfo: {
-    flex: 2,
     padding: 10,
     borderColor: "#ccc",
     borderWidth: 1,
@@ -88,9 +93,10 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontWeight: "bold",
+    fontSize: 20,
   },
   cardDetails: {
-    fontSize: 12,
+    fontSize: 14,
     color: "#444",
   },
 });

@@ -1,22 +1,10 @@
 import React, { useRef } from "react";
-import {
-  View,
-  Text,
-  Button,
-  FlatList,
-  StyleSheet,
-  Dimensions,
-  Platform,
-  Animated,
-} from "react-native";
+import { StyleSheet, Dimensions, Platform, Animated } from "react-native";
 import Card from "../components/Card";
-const { width, height } = Dimensions.get("window");
-const CARD_HEIGHT = 220;
+const { width } = Dimensions.get("window");
 const CARD_WIDTH = width * 0.8;
-const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
-import MapContextProvider from "../store/context/map-context";
 
-const CardList = ({ data, navigation }) => {
+const CardList = ({ data }) => {
   const scrollX = useRef(new Animated.Value(0)).current;
 
   const renderItem = ({ item, index }) => {
@@ -26,11 +14,7 @@ const CardList = ({ data, navigation }) => {
       outputRange: [1, 1, 1, 0],
     });
 
-    return (
-      <MapContextProvider>
-        <Card itemData={item} tranformScale={scale} />
-      </MapContextProvider>
-    );
+    return <Card itemData={item} tranformScale={scale} />;
   };
   return (
     <Animated.FlatList

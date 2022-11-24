@@ -1,17 +1,18 @@
-import { getListOfCafeStorePhotos } from "./PhotosApi";
+import { cafeImages } from "../constants/images-array";
+import Constants from "expo-constants";
+
+const PLACES_API_KEY = Constants.manifest.extra.PLACES_API_KEY;
 
 const getUrlForCafeStores = (latLong, query, limit) => {
   return `https://api.foursquare.com/v3/places/search?query=${query}&ll=${latLong}&limit=${limit}`;
 };
 
 const MapData = async (mapRegion) => {
-  // const photos = await getListOfCafeStorePhotos();
-  // console.log(photos);
   const options = {
     method: "GET",
     headers: {
       Accept: "application/json",
-      Authorization: "",
+      Authorization: PLACES_API_KEY,
     },
   };
   const latLang = `${mapRegion.latitude},${mapRegion.longitude}`;
@@ -26,12 +27,16 @@ const MapData = async (mapRegion) => {
     return {
       id: result.fsq_id,
       address: result.location.address,
+      fullAddress: result.location.formatted_address,
       name: result.name,
       geocodes: {
         latitude: result.geocodes.main.latitude,
         longitude: result.geocodes.main.longitude,
       },
-      // imgUrl: photos.length > 0 ? photos[index] : null,
+      imgUrl:
+        cafeImages.length > 0
+          ? cafeImages[Math.floor(Math.random() * 9) + 1]
+          : null,
     };
   });
 

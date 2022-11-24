@@ -18,7 +18,8 @@
     "unsplash-js": "^7.0.15"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "react-native-dotenv": "^3.4.2"
   },
   "private": true
 }

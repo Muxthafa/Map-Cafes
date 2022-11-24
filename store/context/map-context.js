@@ -21,7 +21,6 @@ function MapContextProvider({ children }) {
   }
 
   function addMapRegion(region) {
-    console.log(region);
     setMapRegion(region);
   }
 
