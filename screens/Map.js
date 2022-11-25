@@ -1,13 +1,19 @@
 import React, { useEffect, useContext } from "react";
 import MapView, { Marker } from "react-native-maps";
-import { StyleSheet, View, Dimensions, StatusBar } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Dimensions,
+  StatusBar,
+  ActivityIndicator,
+} from "react-native";
 import CardList from "../components/CardList";
 import { MapContext } from "../store/context/map-context";
 import useCurrentLocation from "../hooks/useCurrentLocation";
 import Header from "../components/Header";
 
 export default function Map() {
-  const { userLocation } = useCurrentLocation();
+  const { userLocation, loading } = useCurrentLocation();
   const { cafes, mapRegion } = useContext(MapContext);
 
   const coords = {
@@ -26,6 +32,14 @@ export default function Map() {
   useEffect(() => {
     userLocation();
   }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.loadingIndicator}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -54,5 +68,10 @@ const styles = StyleSheet.create({
   map: {
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
+  },
+  loadingIndicator: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
