@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 module.exports = {
   expo: {
     name: "Map-Cafes",
@@ -28,7 +30,7 @@ module.exports = {
       favicon: "./assets/favicon.png",
     },
     extra: {
-      PLACES_API_KEY: "fsq3IRY4f0OaE49fpjFsFpR5CUvrbybRfV4LGFW0P9v2FJ8=",
+      PLACES_API_KEY: process.env.PLACES_API_KEY,
     },
   },
 };
