@@ -17,28 +17,33 @@ const MapData = async (mapRegion) => {
   };
   const latLang = `${mapRegion.latitude},${mapRegion.longitude}`;
 
-  const response = await fetch(
-    getUrlForCafeStores(latLang, "cafe", 5),
-    options
-  );
-  const data = await response.json();
+  let cafes;
+  try {
+    const response = await fetch(
+      getUrlForCafeStores(latLang, "cafe", 5),
+      options
+    );
+    const data = await response.json();
 
-  const cafes = data.results.map((result, index) => {
-    return {
-      id: result.fsq_id,
-      address: result.location.address,
-      fullAddress: result.location.formatted_address,
-      name: result.name,
-      geocodes: {
-        latitude: result.geocodes.main.latitude,
-        longitude: result.geocodes.main.longitude,
-      },
-      imgUrl:
-        cafeImages.length > 0
-          ? cafeImages[Math.floor(Math.random() * 9) + 1]
-          : null,
-    };
-  });
+    cafes = data.results.map((result, index) => {
+      return {
+        id: result.fsq_id,
+        address: result.location.address,
+        fullAddress: result.location.formatted_address,
+        name: result.name,
+        geocodes: {
+          latitude: result.geocodes.main.latitude,
+          longitude: result.geocodes.main.longitude,
+        },
+        imgUrl:
+          cafeImages.length > 0
+            ? cafeImages[Math.floor(Math.random() * 9) + 1]
+            : null,
+      };
+    });
+  } catch (error) {
+    console.log(error);
+  }
 
   return cafes;
 };
